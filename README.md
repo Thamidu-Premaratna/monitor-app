@@ -25,6 +25,8 @@ When there is an alert, the system will notify the user either by Email/SMS or P
 ## Badges
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+![Github Created At](https://img.shields.io/github/created-at/Thamidu-Premaratna/monitor-app)
+
 
 
 
