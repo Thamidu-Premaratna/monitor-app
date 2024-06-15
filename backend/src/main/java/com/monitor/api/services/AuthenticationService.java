@@ -3,6 +3,8 @@ package com.monitor.api.services;
 import com.monitor.api.dto.request.AuthenticationRequest;
 import com.monitor.api.dto.request.RegistrationRequest;
 import com.monitor.api.dto.response.AuthenticationResponse;
+import com.monitor.api.exceptions.UserAlreadyExistsException;
+import com.monitor.api.exceptions.UserNotFoundException;
 import com.monitor.api.entity.User;
 import com.monitor.api.repository.RoleRepository;
 import com.monitor.api.repository.UserRepository;
@@ -25,10 +27,10 @@ public class AuthenticationService {
 
     private final JwtService jwtService;
 
-    public void register(RegistrationRequest request){
+    public void register(RegistrationRequest request) throws UserAlreadyExistsException {
         // Check if the user already exists
         if(userRepository.findByEmail(request.getEmail()).isPresent()){
-            throw new RuntimeException("User already exists");
+            throw new UserAlreadyExistsException("User already exists");
         }
 
         var user = com.monitor.api.entity.User.builder()
@@ -44,17 +46,17 @@ public class AuthenticationService {
 
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) { // Authenticate the user and return the token
+    public AuthenticationResponse authenticate(AuthenticationRequest request) throws UserNotFoundException { // Authenticate the user and return the token
         var auth = authenticationManager.authenticate( // Authenticate the user
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
                         request.getPassword())
         );
-        // Throw an exception if the authentication fails. User does not exist or password is incorrect.
-        if (!auth.isAuthenticated()) {
-            throw new RuntimeException("User does not exist or password is incorrect");
-        }
 
+        if (!auth.isAuthenticated()){
+            throw new UserNotFoundException("User does not exists or pasword incorrect");
+        }
+      
         var claims = new HashMap<String,Object>(); // Claims to be added to the token payload
         var user = ((User)auth.getPrincipal()); // Get the user from the authentication object returned
         // A claim is a piece of information asserted about a subject and is used to provide the subject with specific rights or privileges.

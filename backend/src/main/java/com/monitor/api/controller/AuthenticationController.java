@@ -3,6 +3,8 @@ package com.monitor.api.controller;
 import com.monitor.api.dto.request.AuthenticationRequest;
 import com.monitor.api.dto.request.RegistrationRequest;
 import com.monitor.api.dto.response.AuthenticationResponse;
+import com.monitor.api.exceptions.UserAlreadyExistsException;
+import com.monitor.api.exceptions.UserNotFoundException;
 import com.monitor.api.services.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +23,7 @@ public class AuthenticationController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> register(
             @RequestBody @Valid RegistrationRequest request
-    ) {
+    )throws UserAlreadyExistsException {
         authenticationService.register(request);
         return ResponseEntity.created(null).build();
     }
@@ -29,7 +31,7 @@ public class AuthenticationController {
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody @Valid AuthenticationRequest request
-    ){
+    ) throws UserNotFoundException {
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 }
