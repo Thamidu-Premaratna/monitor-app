@@ -3,12 +3,12 @@ package com.monitor.api.services;
 import com.monitor.api.dto.request.AuthenticationRequest;
 import com.monitor.api.dto.request.RegistrationRequest;
 import com.monitor.api.dto.response.AuthenticationResponse;
+import com.monitor.api.entity.User;
 import com.monitor.api.repository.RoleRepository;
 import com.monitor.api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,7 @@ public class AuthenticationService {
             throw new RuntimeException("User already exists");
         }
 
-        var user = com.monitor.api.model.User.builder()
+        var user = com.monitor.api.entity.User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
                 .email(request.getEmail())
@@ -50,12 +50,18 @@ public class AuthenticationService {
                         request.getEmail(),
                         request.getPassword())
         );
+        // Throw an exception if the authentication fails. User does not exist or password is incorrect.
+        if (!auth.isAuthenticated()) {
+            throw new RuntimeException("User does not exist or password is incorrect");
+        }
+
         var claims = new HashMap<String,Object>(); // Claims to be added to the token payload
         var user = ((User)auth.getPrincipal()); // Get the user from the authentication object returned
         // A claim is a piece of information asserted about a subject and is used to provide the subject with specific rights or privileges.
 
+        claims.put("id", user.getId());
         claims.put("email", user.getUsername());
-        claims.put("authorities", user.getAuthorities());
+        claims.put("fullName", user.getFullName());
         var jwtToken = jwtService.generateToken(claims, user); // Generate the token
         return AuthenticationResponse
                 .builder()
