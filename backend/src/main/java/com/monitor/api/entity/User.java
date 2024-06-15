@@ -1,4 +1,4 @@
-package com.monitor.api.model;
+package com.monitor.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;

@@ -1,6 +1,6 @@
 package com.monitor;
 
-import com.monitor.api.model.Role;
+import com.monitor.api.entity.Role;
 import com.monitor.api.repository.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
