@@ -120,6 +120,31 @@ public class GlobalExceptionHandler {
                                 .build()
                 );
     }
+    // Handle SensorNotFoundException
+    @ExceptionHandler(SensorNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleException(SensorNotFoundException exp) { // Handle SensorNotFoundException and return a response
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND) // Return 404 Not Found status
+                .body(
+                        ExceptionResponse
+                                .builder()
+                                .error(exp.getMessage())
+                                .build()
+                );
+    }
+
+    // Handle SensorAlreadyExistsException
+    @ExceptionHandler(SensorAlreadyExistsException.class)
+    public ResponseEntity<ExceptionResponse> handleException(SensorAlreadyExistsException exp) { // Handle SensorAlreadyExistsException and return a response
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT) // Return 409 Conflict status
+                .body(
+                        ExceptionResponse
+                                .builder()
+                                .error(exp.getMessage())
+                                .build()
+                );
+    }
 
     // Handle MethodArgumentNotValidException for validation errors
     @ExceptionHandler(MethodArgumentNotValidException.class)
