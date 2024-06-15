@@ -1,6 +1,21 @@
 package com.monitor.api.utils.config;
 
+/*
+    SIT Group project : monitor-app v1.0
 
+    ------------------ Security Configuration ----------------------
+    (Spring Security Configuration)
+    * This will define security configurations for the monitor app
+    * It defines a security filter chain to secure the application
+    * It uses an authentication provider to authenticate users
+    * It uses a custom JWT filter to check JWT before the UsernamePasswordAuthenticationFilter
+    * It allows requests to the auth endpoint without authentication
+    * All other requests require authentication
+    * It sets the session creation policy to STATELESS
+
+ */
+
+import com.monitor.api.utils.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +37,9 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
     private final AuthenticationProvider authenticationProvider;
-    private final JwtFilter jwtAuthFilter;
+    private final JwtFilter jwtAuthFilter; // Custom JWT filter to check JWT before the UsernamePasswordAuthenticationFilter
+
+    // Define a security filter chain to secure the application
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
@@ -30,24 +47,14 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(
-                                        "/auth/**",
-                                        "/v2/api-docs",
-                                        "/v3/api-docs",
-                                        "/v3/api-docs/**",
-                                        "/swagger-resources",
-                                        "/swagger-resources/**",
-                                        "/configuration/ui",
-                                        "/configuration/security",
-                                        "/swagger-ui/**",
-                                        "/swagger-ui.html",
-                                        "/webjars/**"
-
+                                        "/auth/**" // Allow requests to the auth endpoint without authentication
                                 ).permitAll()
-                                .anyRequest().authenticated()
+                                .anyRequest().authenticated() // All other requests require authentication
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); // Before UsernamePasswordAuthenticationFilter to check JWT first using my custom jwt filter
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)// Before UsernamePasswordAuthenticationFilter, check JWT first using the jwt filter
+                .formLogin(withDefaults());
         return http.build();
     }
 }
