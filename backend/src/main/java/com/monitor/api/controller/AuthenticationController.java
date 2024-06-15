@@ -20,12 +20,12 @@ public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
     @PostMapping("/register")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> register(
             @RequestBody @Valid RegistrationRequest request
     )throws UserAlreadyExistsException {
         authenticationService.register(request);
-        return ResponseEntity.accepted().build();
+        return ResponseEntity.created(null).build();
     }
 
     @PostMapping("/authenticate")

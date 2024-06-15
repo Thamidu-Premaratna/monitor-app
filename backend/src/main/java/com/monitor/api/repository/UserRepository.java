@@ -1,6 +1,6 @@
 package com.monitor.api.repository;
 
-import com.monitor.api.model.User;
+import com.monitor.api.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
