@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("auth") // Set the base path for the controller. This is enough since we have added /api/v1 in the application.yml file
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;

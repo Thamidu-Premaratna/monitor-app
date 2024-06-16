@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("sensor")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "", allowedHeaders = "")
-
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 public class SensorController {
     private final SensorService sensorService;
 
