@@ -23,6 +23,6 @@ public class Sensor {
 
     @OneToMany(mappedBy = "sensor", cascade = CascadeType.ALL, orphanRemoval = true) // One sensor can have many sensor data
     @JsonBackReference // To prevent infinite loop
-    private List<SensorData> data;
+    private List<SensorData> data;
 
 }

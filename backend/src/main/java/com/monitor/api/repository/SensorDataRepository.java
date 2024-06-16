@@ -15,6 +15,6 @@ public interface SensorDataRepository extends JpaRepository<SensorData, Integer>
 
     List<SensorData> findAllByDateBetweenAndSensor(LocalDateTime date, LocalDateTime date2, Sensor sensor);
 
-    List<SensorData> findAllBySensor(Sensor sensor);
+    List<SensorData> findAllBySensor(Sensor sensor);
 
 }

@@ -22,5 +22,5 @@ public class SensorData {
     @JsonManagedReference
     private Sensor sensor; // Will be sensor_id in the SensorDataDTO
     private LocalDateTime date;
-    private String dataValue;
+    private String dataValue;
 }

@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/monitor-db
     username: root
-    password: ""
+    password: mysql@2024
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -13,31 +13,12 @@ spring:
         format_sql: true
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
-#  mail:
-#    host: localhost
-#    port: 1025
-#    username: username
-#    password: password
-#    properties:
-#      mail:
-#        smtp:
-#          trust: "*"
-#        auth: true
-#        starttls:
-#          enable: true
-#        connectiontimeout: 5000
-#        timeout: 3000
-#        writetimeout: 5000
 
   application:
     security:
       jwt:
         secret-key: 6dc5033edac46346623ac6913044de8f4fcd750390b2fcc5eafb205fdebd1c73
         expiration: 86400000
-
-#    mailing:
-#      frontend:
-#        activation-url: http://localhost:8080/activate-account
 
 springdoc:
   default-produces-media-type: application/json
