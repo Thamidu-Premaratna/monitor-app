@@ -4,7 +4,7 @@ import axios from 'axios';
 const API_URL = 'http://localhost:8080/api/v1/sensor/sensor-data/get/all';
 
 const getSensorData = async () => {
-    const response = await axios.get(`${API_URL}/1`);
+    const response = await axios.get(`${API_URL}`);
     return response.data;
 };
 
