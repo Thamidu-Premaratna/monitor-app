@@ -25,13 +25,15 @@ const Register = () => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [role, setRole] = useState('');
 
 
     const registerUser = async (event) => {
         event.preventDefault();
         try {
-            await authService.register(email, password);
+            await authService.register(firstName, lastName, email, password, role);
             alert('Registration successful');
+            navigate('/login'); // Redirect to login page after successful registration
         } catch (error) {
             console.error('Registration failed', error);
         }
@@ -105,6 +107,19 @@ const Register = () => {
                                     type="password"
                                     id="password"
                                     autoComplete="new-password"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    value={password}
+                                    onChange={(e) => setRole(e.target.value)}
+                                    required
+                                    fullWidth
+                                    name="role"
+                                    label="Role"
+                                    type="text"
+                                    id="role"
+                                    autoComplete="role"
                                 />
                             </Grid>
                         </Grid>

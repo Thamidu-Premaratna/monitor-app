@@ -10,10 +10,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {useState} from "react";
-import {useNavigate} from "react-router-dom"
-
-// TODO remove, this demo shouldn't need to reset the theme.
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const defaultTheme = createTheme();
 
@@ -94,7 +92,7 @@ const Login = () => {
                 </Box>
             </Container>
         </ThemeProvider>
-    )
+    );
 };
 
 export default Login;
