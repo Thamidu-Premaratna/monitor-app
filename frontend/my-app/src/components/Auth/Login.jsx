@@ -1,12 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import authService from '../../services/auth.service';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -14,22 +10,27 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-// TODO remove, this demo shouldn't need to reset the theme.
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const defaultTheme = createTheme();
 
-export default function Login(event) {
-    event.preventDefault();
-    try {
-        await authService.login(email, password);
-        navigate('/dashboard');
-    } catch (error) {
-        console.error('Login failed', error);
-    }
-};
+const Login = () => {
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-return (
+    const logUser = async (event) => {
+        event.preventDefault();
+        try {
+            await authService.login(email, password);
+            navigate('/dashboard');
+        } catch (error) {
+            console.error('Login failed', error);
+        }
+    };
+
+    return (
         <ThemeProvider theme={defaultTheme}>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
@@ -47,8 +48,10 @@ return (
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <Box component="form" onSubmit={logUser} noValidate sx={{ mt: 1 }}>
                         <TextField
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             margin="normal"
                             required
                             fullWidth
@@ -59,6 +62,8 @@ return (
                             autoFocus
                         />
                         <TextField
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             margin="normal"
                             required
                             fullWidth
@@ -88,4 +93,6 @@ return (
             </Container>
         </ThemeProvider>
     );
-}
+};
+
+export default Login;

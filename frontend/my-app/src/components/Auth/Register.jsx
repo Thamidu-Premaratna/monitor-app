@@ -14,19 +14,30 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import authService from '../../services/auth.service';
+import {useState} from "react";
 
 const defaultTheme = createTheme();
 
-export default function SignUp(event ) {
+const Register = () => {
+    const navigate = useNavigate();
 
-    event.preventDefault();
-    try {
-        await authService.register(email, password);
-        alert('Registration successful');
-    } catch (error) {
-        console.error('Registration failed', error);
-    }
-};
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [role, setRole] = useState('');
+
+
+    const registerUser = async (event) => {
+        event.preventDefault();
+        try {
+            await authService.register(firstName, lastName, email, password, role);
+            alert('Registration successful');
+            navigate('/login'); // Redirect to login page after successful registration
+        } catch (error) {
+            console.error('Registration failed', error);
+        }
+    };
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -46,10 +57,12 @@ export default function SignUp(event ) {
                     <Typography component="h1" variant="h5">
                         Sign up
                     </Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                    <Box component="form" noValidate onSubmit={registerUser} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)}
                                     autoComplete="given-name"
                                     name="firstName"
                                     required
@@ -61,6 +74,8 @@ export default function SignUp(event ) {
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
                                     required
                                     fullWidth
                                     id="lastName"
@@ -71,6 +86,8 @@ export default function SignUp(event ) {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     required
                                     fullWidth
                                     id="email"
@@ -81,6 +98,8 @@ export default function SignUp(event ) {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     required
                                     fullWidth
                                     name="password"
@@ -88,6 +107,19 @@ export default function SignUp(event ) {
                                     type="password"
                                     id="password"
                                     autoComplete="new-password"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    value={password}
+                                    onChange={(e) => setRole(e.target.value)}
+                                    required
+                                    fullWidth
+                                    name="role"
+                                    label="Role"
+                                    type="text"
+                                    id="role"
+                                    autoComplete="role"
                                 />
                             </Grid>
                         </Grid>
@@ -110,5 +142,7 @@ export default function SignUp(event ) {
                 </Box>
             </Container>
         </ThemeProvider>
-    );
-}
+    )
+};
+
+export default Register;

@@ -1,3 +1,24 @@
+// import React from 'react';
+//
+// const SensorData = ({ data }) => {
+//     return (
+//         <div>
+//             <h3>Sensor Data</h3>
+//             <ul>
+//                 {data.map((item) => (
+//                     <li key={item.sensor_id}>
+//                         {item.date}: {item.data_value}
+//                     </li>
+//                 ))}
+//             </ul>
+//         </div>
+//     );
+// };
+//
+// export default SensorData;
+
+
+
 import React from 'react';
 
 const SensorData = ({ data }) => {
@@ -5,9 +26,9 @@ const SensorData = ({ data }) => {
         <div>
             <h3>Sensor Data</h3>
             <ul>
-                {data.map((sensor) => (
-                    <li key={sensor.id}>
-                        {sensor.sensorId}: {sensor.dataValue} at {new Date(sensor.date).toLocaleString()}
+                {data.map((item) => (
+                    <li key={item.sensor_id}>
+                        {item.date}: {item.data_value}
                     </li>
                 ))}
             </ul>
