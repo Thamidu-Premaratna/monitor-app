@@ -33,7 +33,7 @@ const Register = () => {
         try {
             await authService.register(firstName, lastName, email, password, role);
             alert('Registration successful');
-            navigate('/login'); // Redirect to login page after successful registration
+            navigate('/'); // Redirect to login page after successful registration
         } catch (error) {
             console.error('Registration failed', error);
         }
@@ -133,7 +133,7 @@ const Register = () => {
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link href="/login" variant="body2">
+                                <Link href="/" variant="body2">
                                     Already have an account? Sign in
                                 </Link>
                             </Grid>
